@@ -1,0 +1,4 @@
+opencv
+*.pyc
+.DS_Store
+.cache
