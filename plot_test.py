@@ -14,7 +14,6 @@ class TestPlot(unittest.TestCase):
         print "\n\nCorners:\n\n", self.plot.corners
         assert cv2.contourArea(self.plot.corners) > 321000
 
-
     def test_finding_seriespoints(self):
 
         self.plot.corners = [

@@ -33,15 +33,19 @@ class Plot():
             X_ticks - Array of coordinates of ticks
             Y_ticks - Array of coordinates of ticks
         """
-        assert self.img != None
-        self.corners = methods["cornerFinder"](self.img)
-        assert len(self.corners) != 0
+        pass
 
     def findSeriesPoints(self):
-
+        """
+        Input: 
+            Plot Image
+            Corners
+        Output: 
+            Series Points with Colors
+        """
         assert len(self.corners) != 0
         self.seriesPoints = methods["seriesPointsFinder"](self.img, self.corners)
-        assert len(self.seriesPoints) != 0
+        # assert len(self.seriesPoints) != 0
 
     def recognizeText(self):
         """
@@ -51,6 +55,7 @@ class Plot():
 
         Input: 
             Plot Image
+            Regions
         Output: 
             Dict(Region -> Text)
         """

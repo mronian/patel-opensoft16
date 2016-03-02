@@ -8,3 +8,4 @@ class Image():
 
         self.img = cv2.imread(imgpath)
         self.gray = cv2.imread(imgpath,0)
+        self.imgpath = imgpath
