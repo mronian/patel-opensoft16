@@ -29,7 +29,7 @@ class TestPlot(unittest.TestCase):
             (240, 538),
             (333, 538), 
         ]
-        self.colors = [
+        self.colors = {
             (48 ,31, 188),
             (90, 182, 109),
             (148, 81, 72),
@@ -37,7 +37,10 @@ class TestPlot(unittest.TestCase):
             (213, 201, 129),
             (59, 235, 241),
             (170, 170, 170)
-        ]
+        }
+        self.plot_title = r'b) Performances of various anytime algorithms'
+        self.x_caption = r'Time (Sec)'
+        self.y_caption = r'% Optimal Closeness'
 
     def test_finding_corners(self):
         """
@@ -111,24 +114,51 @@ class TestPlot(unittest.TestCase):
         """
         self.plot.corners = self.corners
         plotColors = self.plot.findColors()
-        assert plotColors == set(self.colors)
+        assert plotColors == self.colors
+
+    
+    def test_extract_plot_title(self):
+        """
+
+        """
+        self.plot.corners = self.corners
+        plotTitleRect = self.plot.findTitleRect()
+        plotTitle = helper.getOCRText(self.plot.img, plotTitleRect)
+        assert plotTitle == self.plot_title
 
     def test_extract_xaxis_caption(self):
         """
         
         """
-        pass
+        self.plot.corners = self.corners
+        xaxisCaptionRect = self.plot.findXCaptionRect()
+        xaxisCaption = helper.getOCRText(self.plot.img, xaxisCaptionRect)
+        assert xaxisCaption == self.x_caption
+
 
     def test_extract_yaxis_caption(self):
         """
         
         """
-        pass
+        self.plot.corners = self.corners
+        yaxisCaptionRect = self.plot.findYCaption()
+        yaxisCaption = helper.getOCRText(self.plot.img, yaxisCaptionRect)
+        assert yaxisCaption == self.y_caption
 
     def test_mask_other_colors(self):
         """
         
         """
-        pass
+        self.plot.corners = self.corners
+        for target_color in self.colors:
+            maskedPlot = helper.getMaskedPlot(self.plot.img, target_color, self.colors)
+            for color in self.colors:
+                if color == target_color:
+                    if color not in maskedPlot:
+                        assert False
+                elif color != target_color:
+                    if color in maskedPlot:
+                        assert False
+        assert True
 
 unittest.main()

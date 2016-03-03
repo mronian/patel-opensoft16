@@ -5,6 +5,7 @@ class Plot():
     img = None # openCV object
     corners = [] # Boundary corners
     seriesPoints = {} # Series Points
+    colors = {} # Set of color tuples present in the plot
 
     X_scale = (0,0)
     Y_scale = (0,0)
@@ -96,6 +97,8 @@ class Plot():
         Output:
             Set of tuples of colors present in the plot
         """
+        self.colors = methods["colorFinder"](self.img)
+        return self.colors
 
         pass
     def parseScaleValues(self):
@@ -118,3 +121,19 @@ class Plot():
         """
         pass
 
+    def findTitleRect():
+        """
+        
+        """
+        pass
+    def findXCaptionRect():
+        """
+        
+        """
+        pass
+    def findYCaption():
+        """
+        
+        """
+        pass
+        

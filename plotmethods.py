@@ -1,6 +1,7 @@
 import corners
 import seriesExtractor
 import tickmethods
+import colorExtractor
 
 methods = {
 
@@ -9,6 +10,8 @@ methods = {
         "seriesPointsFinder": seriesExtractor.extractSeriesPoints,
 
         "xticksFinder": tickmethods.getTicks,
+
+        "colorFinder": colorExtractor.getColors
 
 }
 
