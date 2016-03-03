@@ -28,9 +28,16 @@ class TestPlot(unittest.TestCase):
         self.xticks = [
             (240, 538),
             (333, 538), 
-
         ]
-
+        self.colors = [
+            (48 ,31, 188),
+            (90, 182, 109),
+            (148, 81, 72),
+            (135, 102, 159),
+            (213, 201, 129),
+            (59, 235, 241),
+            (170, 170, 170)
+        ]
 
     def test_finding_corners(self):
         """
@@ -97,5 +104,31 @@ class TestPlot(unittest.TestCase):
         self.plot.corners = self.corners
         self.plot.findSeriesPoints()
         print self.plot.seriesPoints
+
+    def test_extract_plot_colors(self):
+        """
+        
+        """
+        self.plot.corners = self.corners
+        plotColors = self.plot.findColors()
+        assert plotColors == set(self.colors)
+
+    def test_extract_xaxis_caption(self):
+        """
+        
+        """
+        pass
+
+    def test_extract_yaxis_caption(self):
+        """
+        
+        """
+        pass
+
+    def test_mask_other_colors(self):
+        """
+        
+        """
+        pass
 
 unittest.main()

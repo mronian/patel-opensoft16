@@ -89,7 +89,15 @@ class Plot():
         """
         pass
     
+    def findColors(self):
+        """
+        Input:
+            Plot Corners
+        Output:
+            Set of tuples of colors present in the plot
+        """
 
+        pass
     def parseScaleValues(self):
         """
         Input: 
