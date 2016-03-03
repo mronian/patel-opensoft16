@@ -22,6 +22,7 @@ def onmouse(event,x,y,flags,param):
     if( event == cv2.EVENT_MOUSEMOVE ) :
         return
     print x, y
+    print img[y][x]
 
 cv2.imshow('img',img)
 cv2.setMouseCallback('img',onmouse)

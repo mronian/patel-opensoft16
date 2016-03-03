@@ -24,6 +24,12 @@ class TestPlot(unittest.TestCase):
             [[860,  87]],
         ]
         self.first_tick = [240,538]
+        self.first_tick_text = 500
+        self.xticks = [
+            (240, 538),
+            (333, 538), 
+
+        ]
 
 
     def test_finding_corners(self):
@@ -56,7 +62,6 @@ class TestPlot(unittest.TestCase):
             
         """
 
-        self.plot.corners = self.corners
         ticks = self.plot.findTicks()
         assert helper.getDistance(ticks[0], self.first_tick) < 5
 
@@ -77,6 +82,14 @@ class TestPlot(unittest.TestCase):
             - Actual text content corresponding to 1st tick
             
         """
+
+        self.plot.corners = self.corners
+        self.plot.xticks = self.xticks
+        ticktextRect = self.plot.find_tick_text()
+        
+        tickText = helper.getOCRText(self.plot.img, ticktextRect[0])
+        assert tickText == self.first_tick_text
+
     def test_finding_seriespoints(self):
         """
         
@@ -85,3 +98,4 @@ class TestPlot(unittest.TestCase):
         self.plot.findSeriesPoints()
         print self.plot.seriesPoints
 
+unittest.main()

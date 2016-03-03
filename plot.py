@@ -39,6 +39,11 @@ class Plot():
         self.x_ticks = methods["xticksFinder"](self.img, self.corners)
         return self.x_ticks
 
+    def find_tick_text(self):
+
+        self.xticksTextRects = methods["xtickstextFinder"](self.img, self.corners, self.xticks)
+        return self.xticksTextRects
+
     def findSeriesPoints(self):
         """
         Input: 
