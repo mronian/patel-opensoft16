@@ -56,7 +56,6 @@ class TestPlot(unittest.TestCase):
             - Actual text content corresponding to 1st tick
             
         """
-        hjhj
     def test_finding_seriespoints(self):
         """
         
