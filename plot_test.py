@@ -2,12 +2,29 @@ import unittest
 from plot import *
 from image import *
 import cv2
+import helpers as helper
 
 class TestPlot(unittest.TestCase):
 
     def setUp(self):
         img = Image("img/tstplot.jpg")
         self.plot = Plot(img)
+        self.initialize_hardcoded_values()
+
+    def initialize_hardcoded_values(self):
+
+        self.corners = [
+
+            [[145,  87]],
+
+            [[145, 536]],
+
+            [[860, 536]],
+
+            [[860,  87]],
+        ]
+        self.first_tick = [240,538]
+
 
     def test_finding_corners(self):
         """
@@ -22,7 +39,6 @@ class TestPlot(unittest.TestCase):
             
         """
         self.plot.findCorners()
-        print "\n\nCorners:\n\n", self.plot.corners
         assert cv2.contourArea(self.plot.corners) > 321000
 
     def test_xtick_coordinates(self):
@@ -39,6 +55,11 @@ class TestPlot(unittest.TestCase):
             - Actual Coordinates of the 1st tick point
             
         """
+
+        self.plot.corners = self.corners
+        ticks = self.plot.findTicks()
+        assert helper.getDistance(ticks[0], self.first_tick) < 5
+
 
     def test_xtick_text(self):
         """
@@ -60,17 +81,7 @@ class TestPlot(unittest.TestCase):
         """
         
         """
-
-        self.plot.corners = [
-
-            [[145,  87]],
-
-            [[145, 536]],
-
-            [[860, 536]],
-
-            [[860,  87]],
-        ]
+        self.plot.corners = self.corners
         self.plot.findSeriesPoints()
         print self.plot.seriesPoints
 

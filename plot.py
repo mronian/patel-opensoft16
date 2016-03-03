@@ -24,6 +24,8 @@ class Plot():
         self.corners = methods["cornerFinder"](self.img)
         assert len(self.corners) != 0
 
+        return self.corners
+
     def findTicks(self):
         """
         Input: 
@@ -33,7 +35,9 @@ class Plot():
             X_ticks - Array of coordinates of ticks
             Y_ticks - Array of coordinates of ticks
         """
-        pass
+
+        self.x_ticks = methods["xticksFinder"](self.img, self.corners)
+        return self.x_ticks
 
     def findSeriesPoints(self):
         """
