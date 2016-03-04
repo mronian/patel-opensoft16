@@ -95,14 +95,25 @@ class TestPlot(unittest.TestCase):
 
         self.plot.corners = self.corners
         self.plot.xticks = self.xticks
-        ticktextRect = self.plot.find_tick_text()
+        ticktextRect = self.plot.findTickText()
         
         tickText = helper.getOCRText(self.plot.img, ticktextRect[0])
         assert tickText == self.first_tick_text
 
+    """
+    TODO: This test_finding_seriespoints function is not complete yet
+    """
     def test_finding_seriespoints(self):
         """
+        Setup: 
+            - Input Test Image (Already done)
+            - Corners
+            - Tick Coordinates
         
+        Assertion:
+            - Check the Series points with the hardcoded series points
+        
+        Things to Find:
         """
         self.plot.corners = self.corners
         self.plot.findSeriesPoints()
@@ -110,7 +121,14 @@ class TestPlot(unittest.TestCase):
 
     def test_extract_plot_colors(self):
         """
+        Setup: 
+            - Input Test Image (Already done)
         
+        Assertion:
+            - Check the colors present in Image with hardcoded colors
+        
+        Things to Find:
+            - Set of tuples of colors (except Black and white) in Image
         """
         self.plot.corners = self.corners
         plotColors = self.plot.findColors()
@@ -119,7 +137,15 @@ class TestPlot(unittest.TestCase):
     
     def test_extract_plot_title(self):
         """
-
+        Setup: 
+            - Input Test Image (Already done)
+            - Corners
+        Assertion:
+            - Check the plot title with hardcoded value
+        
+        Things to Find:
+            - Rect surrounding the plot title
+            - plot title from the Rect
         """
         self.plot.corners = self.corners
         plotTitleRect = self.plot.findTitleRect()
@@ -128,7 +154,15 @@ class TestPlot(unittest.TestCase):
 
     def test_extract_xaxis_caption(self):
         """
+        Setup: 
+            - Input Test Image (Already done)
+            - Corners
+        Assertion:
+            - Check the x-axis caption with hardcoded value
         
+        Things to Find:
+            - Rect surrounding the x-axis caption
+            - x-axis caption from the Rect
         """
         self.plot.corners = self.corners
         xaxisCaptionRect = self.plot.findXCaptionRect()
@@ -138,7 +172,15 @@ class TestPlot(unittest.TestCase):
 
     def test_extract_yaxis_caption(self):
         """
+        Setup: 
+            - Input Test Image (Already done)
+            - Corners
+        Assertion:
+            - Check the y-axis caption with hardcoded value
         
+        Things to Find:
+            - Rect surrounding the y-axis caption
+            - y-axis caption from the Rect
         """
         self.plot.corners = self.corners
         yaxisCaptionRect = self.plot.findYCaption()
@@ -147,7 +189,15 @@ class TestPlot(unittest.TestCase):
 
     def test_mask_other_colors(self):
         """
-        
+        Setup: 
+            - Input Test Image (Already done)
+            - Corners
+            - Target Color
+            - All Colors
+        Assertion:
+            - Check the masked out version of image is correct
+        Things to Find:
+            - Masked out version of plot wrt each color in plot
         """
         self.plot.corners = self.corners
         for target_color in self.colors:

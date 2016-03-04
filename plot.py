@@ -40,7 +40,7 @@ class Plot():
         self.x_ticks = methods["xticksFinder"](self.img, self.corners)
         return self.x_ticks
 
-    def find_tick_text(self):
+    def findTickText(self):
 
         self.xticksTextRects = methods["xtickstextFinder"](self.img, self.corners, self.xticks)
         return self.xticksTextRects
@@ -100,7 +100,6 @@ class Plot():
         self.colors = methods["colorFinder"](self.img)
         return self.colors
 
-        pass
     def parseScaleValues(self):
         """
         Input: 
@@ -121,19 +120,34 @@ class Plot():
         """
         pass
 
+    """
+    The next functions use Text areas calculated from assignTextRoles() function
+    We just have to return those Text Areas by these functions
+    """
     def findTitleRect():
         """
-        
+        Input:
+            None
+        Output:
+            Rectangle surrounding the Plot Title
         """
         pass
+
     def findXCaptionRect():
         """
-        
+        Input:
+            None
+        Output:
+            Rectangle surrounding the X-axis Caption
         """
         pass
+
     def findYCaption():
         """
-        
+        Input:
+            None
+        Output:
+            Rectangle surrounding the Y-axis Caption
         """
         pass
         
