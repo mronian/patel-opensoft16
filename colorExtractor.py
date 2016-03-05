@@ -27,6 +27,6 @@ def getColors(image,legend_corners):
                     if(p):
                             a = ([max(output[r,c,0]-20,0),max(output[r,c,1]-20,0),max(output[r,c,2]-20,0)],[min(output[r,c,0]+20,255),min(output[r,c,1]+20,255),min(output[r,c,2]+20,255)])
                             colors.append(a)
-        colors.pop(0)
-        colors.pop(0)
+        colors.pop(0) # Removes Black Color
+        colors.pop(0) # Removes White Color
         return boundaries
