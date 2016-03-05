@@ -55,3 +55,4 @@ def labelsToColoursMapping(image,legendBoundaryCorners,stringToCornersDict,color
         stringToColorDict[element] = color
         
     return stringToColorDict
+    
