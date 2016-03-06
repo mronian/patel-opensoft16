@@ -15,15 +15,16 @@ class TestPlot(unittest.TestCase):
 
         self.corners = [
 
-            [[145,  87]],
+            [145,  87],
 
-            [[145, 536]],
+            [145, 536],
 
-            [[860, 536]],
+            [860, 536],
 
-            [[860,  87]],
+            [860,  87],
         ]
-        self.first_tick = [240,538]
+        self.first_xtick = [240,538]
+        self.first_ytick = [145, 136]
         self.first_tick_text = 500
         self.xticks = [
             (240, 538),
@@ -72,9 +73,30 @@ class TestPlot(unittest.TestCase):
             
         """
 
-        ticks = self.plot.findTicks()
-        assert helper.getDistance(ticks[0], self.first_tick) < 5
+        self.plot.corners = self.corners
+        self.plot.findTicks()
+        ticks = self.plot.x_ticks
+        assert helper.getDistance(ticks[1], self.first_xtick) < 5
 
+    def test_ytick_coordinates(self):
+        """
+        Setup: 
+            - Input Test Image (Already done)
+            - Corners
+        
+        Assertion:
+            - Check if the calculated 1st tick point is approximately correct
+        
+        Things to Find:
+            - Corner Points
+            - Actual Coordinates of the 1st tick point
+            
+        """
+
+        self.plot.corners = self.corners
+        self.plot.findTicks()
+        ticks = self.plot.y_ticks
+        assert helper.getDistance(ticks[1], self.first_ytick) < 5
 
     def test_xtick_text(self):
         """
@@ -211,4 +233,4 @@ class TestPlot(unittest.TestCase):
                         assert False
         assert True
 
-unittest.main()
+# unittest.main()

@@ -37,7 +37,7 @@ class Plot():
             Y_ticks - Array of coordinates of ticks
         """
 
-        self.x_ticks = methods["xticksFinder"](self.img, self.corners)
+        self.x_ticks, self.y_ticks = methods["ticksFinder"](self.img, self.corners)
         return self.x_ticks
 
     def findTickText(self):
@@ -68,25 +68,6 @@ class Plot():
             Regions
         Output: 
             Dict(Region -> Text)
-        """
-        pass
-
-    def assignTextRoles(self):
-        """
-        For each text region, assign its role in the plot
-        PlotInfo:
-            1. Plot Caption
-            2. X-Axis Label
-            3. Y-Axis Label
-            4. Legends
-            5. X-Axis Ticks
-            6. Y-Axis Ticks
-
-        Input: 
-            Plot Image
-            Dict(Region -> Text)
-        Output: 
-            PlotInfo
         """
         pass
     
