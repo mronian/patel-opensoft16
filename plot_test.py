@@ -130,10 +130,35 @@ class TestPlot(unittest.TestCase):
         # self.plot.x_ticks = self.xticks
         self.plot.findTicks()
         ticktextRect = self.plot.findTickText()
-        tickText = helper.getOCRText(self.plot.img.img, ticktextRect[1])
+        tickText = helper.getOCRText(self.plot.img.img, ticktextRect[4])
         
         assert tickText == self.first_tick_text
 
+    def test_ytick_text(self):
+        """
+        Setup: 
+            - Input Test Image (Already done)
+            - Corners
+            - 1st Tick Point Coordinates
+        
+        Assertion:
+            - Check the OCR on bounding rect and match it with actual text
+        
+        Things to Find:
+            - Corner Points
+            - Actual Coordinates of the 1st tick point
+            - Actual text content corresponding to 1st tick
+            
+        """
+
+        self.plot.corners = self.corners
+        # self.plot.x_ticks = self.xticks
+        self.plot.findTicks()
+        ticktextRect = self.plot.findyTickText()
+        # import pdb; pdb.set_trace()
+        tickText = helper.getOCRText(self.plot.img.img, ticktextRect[4])
+        
+        assert tickText == "90"
     """
     TODO: This test_finding_seriespoints function is not complete yet
     """

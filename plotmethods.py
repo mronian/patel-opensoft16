@@ -17,7 +17,10 @@ methods = {
 
         "maskColor": colourMasking.colourMasking,
 
-        "xtickstextFinder": tickmethods.getTicksText
+        "xtickstextFinder": tickmethods.getTicksText,
+
+        "ytickstextFinder": tickmethods.getYTicksText,
+
 
 }
 
