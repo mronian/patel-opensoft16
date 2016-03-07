@@ -42,7 +42,7 @@ class Plot():
 
     def findTickText(self):
 
-        self.xticksTextRects = methods["xtickstextFinder"](self.img, self.corners, self.xticks)
+        self.xticksTextRects = methods["xtickstextFinder"](self.img, self.corners, self.x_ticks)
         return self.xticksTextRects
 
     def findSeriesPoints(self):
@@ -74,12 +74,18 @@ class Plot():
     def findColors(self):
         """
         Input:
-            Plot Corners
+            Legend Corners
         Output:
             Set of tuples of colors present in the plot
         """
-        self.colors = methods["colorFinder"](self.img)
+        self.colors = methods["colorFinder"](self.img, self.legend_corners)
         return self.colors
+
+    def maskColor(self, color):
+
+        self.maskedImage = methods["maskColor"](self.img.img, self.corners, color)
+        return self.maskedImage
+
 
     def parseScaleValues(self):
         """

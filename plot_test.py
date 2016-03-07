@@ -3,6 +3,7 @@ from plot import *
 from image import *
 import cv2
 import helpers as helper
+import matplotlib.pyplot as plt
 
 class TestPlot(unittest.TestCase):
 
@@ -23,9 +24,19 @@ class TestPlot(unittest.TestCase):
 
             [860,  87],
         ]
+        self.legend_corners = [
+
+            [145,  87],
+
+            [145, 536],
+
+            [860, 536],
+
+            [860,  87],
+        ]
         self.first_xtick = [240,538]
         self.first_ytick = [145, 136]
-        self.first_tick_text = 500
+        self.first_tick_text = "500"
         self.xticks = [
             (240, 538),
             (333, 538), 
@@ -116,10 +127,11 @@ class TestPlot(unittest.TestCase):
         """
 
         self.plot.corners = self.corners
-        self.plot.xticks = self.xticks
+        # self.plot.x_ticks = self.xticks
+        self.plot.findTicks()
         ticktextRect = self.plot.findTickText()
+        tickText = helper.getOCRText(self.plot.img.img, ticktextRect[1])
         
-        tickText = helper.getOCRText(self.plot.img, ticktextRect[0])
         assert tickText == self.first_tick_text
 
     """
@@ -153,6 +165,7 @@ class TestPlot(unittest.TestCase):
             - Set of tuples of colors (except Black and white) in Image
         """
         self.plot.corners = self.corners
+        self.plot.legend_corners = self.legend_corners
         plotColors = self.plot.findColors()
         assert plotColors == self.colors
 
@@ -222,6 +235,15 @@ class TestPlot(unittest.TestCase):
             - Masked out version of plot wrt each color in plot
         """
         self.plot.corners = self.corners
+        
+        clr = (88,79,223)
+
+        img = self.plot.maskColor(clr)
+        plt.show(img)
+        cv2.imshow("input", img)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
         for target_color in self.colors:
             maskedPlot = helper.getMaskedPlot(self.plot.img, target_color, self.colors)
             for color in self.colors:

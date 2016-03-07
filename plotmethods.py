@@ -3,6 +3,7 @@ import seriesExtractor
 import tickmethods
 import colorExtractor
 import findxyticks
+import colourMasking
 
 methods = {
 
@@ -12,7 +13,11 @@ methods = {
 
         "ticksFinder": findxyticks.findticks,
 
-        "colorFinder": colorExtractor.getColors
+        "colorFinder": colorExtractor.getColors,
+
+        "maskColor": colourMasking.colourMasking,
+
+        "xtickstextFinder": tickmethods.getTicksText
 
 }
 
