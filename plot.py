@@ -42,7 +42,7 @@ class Plot():
 
     def findTickText(self):
 
-        self.xticksTextRects = methods["xtickstextFinder"](self.img.img, self.corners, self.x_ticks)
+        self.xticksTextRects = methods["xtickstextFinder"](self.img.gray, self.corners, self.x_ticks)
         return self.xticksTextRects
 
     def findyTickText(self):
@@ -143,3 +143,6 @@ class Plot():
         """
         pass
         
+    def getColorQuant(self):
+        self.quant = methods["colorQuantization"](self.img, self.corners)
+        return self.quant

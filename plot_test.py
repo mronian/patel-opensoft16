@@ -282,4 +282,10 @@ class TestPlot(unittest.TestCase):
                         assert False
         assert True
 
+
+    def test_color_quantization(self):
+        self.plot.corners = self.corners
+        img = self.plot.getColorQuant()
+        helper.showimg(img)
+
 # unittest.main()
