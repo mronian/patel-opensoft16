@@ -50,7 +50,7 @@ class Plot():
         self.yticksTextRects = methods["ytickstextFinder"](self.img.img, self.corners, self.y_ticks)
         return self.yticksTextRects
 
-    def findSeriesPoints(self):
+    def findSeriesPoints(self, img):
         """
         Input: 
             Plot Image
@@ -59,7 +59,7 @@ class Plot():
             Series Points with Colors
         """
         assert len(self.corners) != 0
-        self.seriesPoints = methods["seriesPointsFinder"](self.img, self.corners)
+        return methods["seriesPointsFinder"](img, self.corners)
         # assert len(self.seriesPoints) != 0
 
     def recognizeText(self):

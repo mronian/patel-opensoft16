@@ -130,7 +130,7 @@ class TestPlot(unittest.TestCase):
         # self.plot.x_ticks = self.xticks
         self.plot.findTicks()
         ticktextRect = self.plot.findTickText()
-        tickText = helper.getOCRText(self.plot.img.img, ticktextRect[4])
+        tickText = helper.getOCRText(self.plot.img.img, ticktextRect[1])
         
         assert tickText == self.first_tick_text
 
@@ -156,7 +156,7 @@ class TestPlot(unittest.TestCase):
         self.plot.findTicks()
         ticktextRect = self.plot.findyTickText()
         # import pdb; pdb.set_trace()
-        tickText = helper.getOCRText(self.plot.img.img, ticktextRect[4])
+        tickText = helper.getOCRText(self.plot.img.img, ticktextRect[1])
         
         assert tickText == "90"
     """
@@ -175,8 +175,10 @@ class TestPlot(unittest.TestCase):
         Things to Find:
         """
         self.plot.corners = self.corners
-        self.plot.findSeriesPoints()
-        print self.plot.seriesPoints
+        img = Image("img/series_green.jpg") 
+        points = self.plot.findSeriesPoints(img)
+        print points
+        helper.plotPoints(self.plot.img.img, points)
 
     def test_extract_plot_colors(self):
         """

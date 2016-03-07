@@ -4,12 +4,13 @@ import tickmethods
 import colorExtractor
 import findxyticks
 import colourMasking
+import plotxyseries
 
 methods = {
 
         "cornerFinder": corners.findCorners_1,
 
-        "seriesPointsFinder": seriesExtractor.extractSeriesPoints,
+        "seriesPointsFinder": plotxyseries.getxyseries,
 
         "ticksFinder": findxyticks.findticks,
 

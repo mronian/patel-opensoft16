@@ -31,3 +31,13 @@ def getOCRText(img, corners):
 
     cfg = "-psm 6"
     return tess.image_to_string(imag, config=cfg)
+
+
+def plotPoints(img, points):
+
+    for p in points:
+        cv2.circle(img, (p[0], p[1]), 1, (0,255,0), thickness=1)
+
+    cv2.imshow("input", img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
