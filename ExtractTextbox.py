@@ -43,7 +43,7 @@ def legend_text_box_coordinates(image,corners,thresh):
                             p = 0
                             break
                     if(p):
-                        temp.append()
+                        temp.append([max(image[r,c,0]-20,0),max(image[r,c,1]-20,0),max(image[r,c,2]-20,0)],[min(image[r,c,0]+20,255),min(image[r,c,1]+20,255),min(image[r,c,2]+20,255)])
                         break
                     
                 for (lower,upper) in temp:
@@ -57,7 +57,7 @@ def legend_text_box_coordinates(image,corners,thresh):
                             break
                         t = t + 1
                     if(p):
-                        colors.append()
+                        colors.append((lower,upper))
                         count.append(1)
                 
             colors.pop(0) # Removing White Color
@@ -74,7 +74,61 @@ def legend_text_box_coordinates(image,corners,thresh):
         ur = corners[1,1]
         lc = corners[0,0]
         uc = corners[2,0]
-        
+        for c in xrange(uc,lc,-10):
+            scu = c
+            scl = c-20
+            p = 0
+            count = [0]
+            first = [0]
+            last = [0]
+            colors = [([230,230,230],[255,255,255])]
+            for r in xrange(lr,ur,3):
+                temp = [([230,230,230],[255,255,255])]
+                for x in xrange(suc,slc,-2):
+                    p = 1
+                    for(lower,upper) in temp:
+                        if(~(((image[r,c,0]<lower[0])|(image[r,c,0]>upper[0]))&((image[r,c,1]<lower[1])|(image[r,c,1]>upper[1]))&((image[r,c,2]<lower[2])|(image[r,c,2]>upper[2])))):
+                            p = 0
+                            break
+                    if(p):
+                        temp.append([max(image[r,c,0]-20,0),max(image[r,c,1]-20,0),max(image[r,c,2]-20,0)],[min(image[r,c,0]+20,255),min(image[r,c,1]+20,255),min(image[r,c,2]+20,255)
+                        break
+                    
+                for (lower,upper) in temp:
+                    x = [(lower[0]+upper[0])/2,(lower[1]+upper[1])/2,(lower[1]+upper[1])/2]
+                    t = 0
+                    p = 1 # Flag
+                    for (l,u) in colors:
+                        if(~(((x[0]<l[0])|(x[0]>u[0]))&((x[1]<l[1])|(x[1]>u[1]))&((x[2]<l[2])|(x[2]>u[2])))):
+                            count[t] += 1
+                            last[t] = r
+                            p = 0
+                            break
+                        t = t + 1
+                    if(p):
+                        first.append(r)
+                        colors.append((lower,upper))
+                        count.append(1)
+                
+            colors.pop(0) # Removing White Color
+            count.pop(0) # Removing count for White Color
+            first.pop(0)
+            last.pop(0)
+            if (max(count)>thresh):
+                count = np.array(count)
+                lr = first[count.argmax(axis=0)]
+                ur = last[count.argmax(axis=0)]
+                for r in xrange(lr,ur,3):
+                    for c in xrange(c,lc,-3):
+                        p = 1
+                        if(~(((image[r,c,0]<colors[count.argmax(axis=0),0,0])|(image[r,c,0]>colors[count.argmax(axis=0),1,0]))&((image[r,c,1]<colors[count.argmax(axis=0),0,1])|(image[r,c,1]colors[count.argmax(axis=0),1,1]))&((image[r,c,2]<colors[count.argmax(axis=0),0,2])|(image[r,c,2]>colors[count.argmax(axis=0),1,2])))):
+                            p = 0
+                            lc = c
+                            break
+                legend_text_box_corners = [(lc-10,lr-10),(lc-10,ur+10),(c+10,lr-10),(c+10,ur+10)]
+                break
+            else:
+                continue
         
                     
     return legend_text_box_corners
