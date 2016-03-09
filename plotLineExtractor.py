@@ -4,7 +4,7 @@ Author: Rohan Raja
 
 import numpy as np
 import cv2
-import helpers
+import helpers as hlp
 
 params = {
 
@@ -23,7 +23,12 @@ def extractPlotLine(image, corners, legend_corners, color):
 
     mask = cv2.inRange(image.hsv, lower_blue, upper_blue)
 
-    sub = helpers.subRange(legend_corners)
+    outMask = np.zeros(mask.shape, dtype=np.uint8)
+    sub = hlp.subRange(corners)
+    outMask[sub] = mask[sub]
+    mask = outMask # Remove everything outside corner box
+
+    sub = hlp.subRange(legend_corners)
     mask[sub] = 0 # Remove Legend Box PlotLine
 
     kernel = params["kernel"]
