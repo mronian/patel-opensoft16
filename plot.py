@@ -143,6 +143,10 @@ class Plot():
         """
         pass
         
-    def getColorQuant(self):
-        self.quant = methods["colorQuantization"](self.img, self.corners)
+    def getcolorquant(self):
+        self.quant = methods["colorquantization"](self.img, self.corners)
         return self.quant
+
+    def extractPlotLine(self, color):
+        self.pltline = methods["plotLineExtractor"](self.img, self.corners, self.legend_corners, color)
+        return self.pltline

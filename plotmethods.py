@@ -6,6 +6,7 @@ import findxyticks
 import colourMasking
 import plotxyseries
 import colorquant
+import plotLineExtractor
 
 
 methods = {
@@ -25,6 +26,8 @@ methods = {
         "ytickstextFinder": tickmethods.getYTicksText,
 
         "colorQuantization": colorquant.getQuantImage, 
+
+        "plotLineExtractor": plotLineExtractor.extractPlotLine, 
 
 
 }

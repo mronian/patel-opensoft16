@@ -25,8 +25,20 @@ def getSubImage(img, corners):
     corner_img = corner_img[:,corners[0][0]:corners[2][0]]
     return corner_img
 
+def subRange(corners):
+    return slice(corners[0][1],corners[2][1]), slice(corners[0][0],corners[2][0])
+
+
 def showimg(img):
+
+    def onmouse(event,x,y,flags,param):
+        if( event == cv2.EVENT_MOUSEMOVE ) :
+            return
+        print x, y
+        print (img[y][x])# / 256.0) * 360.0
+
     cv2.imshow("input", img)
+    cv2.setMouseCallback('input',onmouse)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 

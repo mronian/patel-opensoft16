@@ -9,3 +9,4 @@ class Image():
         self.img = cv2.imread(imgpath)
         self.gray = cv2.imread(imgpath,0)
         self.imgpath = imgpath
+        self.hsv = cv2.cvtColor(self.img, cv2.COLOR_BGR2HSV)

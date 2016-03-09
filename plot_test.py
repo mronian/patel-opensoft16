@@ -24,16 +24,16 @@ class TestPlot(unittest.TestCase):
 
             [860,  87],
         ]
-        self.legend_corners = [
 
-            [145,  87],
-
-            [145, 536],
-
-            [860, 536],
-
-            [860,  87],
+        lgnd = [
+                [314,623],[314,839],[520,839],[520,623]
         ]
+        
+        self.legend_corners = []
+        for cr in lgnd:
+            self.legend_corners.append(list(reversed(cr)))
+
+
         self.first_xtick = [240,538]
         self.first_ytick = [145, 136]
         self.first_tick_text = "500"
@@ -284,8 +284,19 @@ class TestPlot(unittest.TestCase):
 
 
     def test_color_quantization(self):
-        self.plot.corners = self.corners
+        self.plot.corners = self.legend_corners
         img = self.plot.getColorQuant()
         helper.showimg(img)
 
+
+    def test_extract_plotline(self):
+        self.plot.corners = self.corners
+        self.plot.legend_corners = self.legend_corners
+        clr = 53
+        img = self.plot.extractPlotLine(clr)
+        img2 = Image("img/series_green.jpg") 
+        img2.gray = img
+        points = self.plot.findSeriesPoints(img2)
+        helper.plotPoints(self.plot.img.img, points)
+        # helper.showimg(img)
 # unittest.main()
