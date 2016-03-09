@@ -3,10 +3,11 @@ import seriesExtractor
 import tickmethods
 import colorExtractor
 import findxyticks
-import colourMasking
+# import colourMasking
 import plotxyseries
 import colorquant
 import plotLineExtractor
+import scaleMethods
 
 
 methods = {
@@ -19,7 +20,7 @@ methods = {
 
         "colorFinder": colorExtractor.getColors,
 
-        "maskColor": colourMasking.colourMasking,
+        # "maskColor": colourMasking.colourMasking,
 
         "xtickstextFinder": tickmethods.getTicksText,
 
@@ -28,6 +29,10 @@ methods = {
         "colorQuantization": colorquant.getQuantImage, 
 
         "plotLineExtractor": plotLineExtractor.extractPlotLine, 
+
+        "parseScale": scaleMethods.parseScale, 
+
+        "rescale": scaleMethods.reScale, 
 
 
 }

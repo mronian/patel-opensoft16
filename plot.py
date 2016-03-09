@@ -50,6 +50,28 @@ class Plot():
         self.yticksTextRects = methods["ytickstextFinder"](self.img.img, self.corners, self.y_ticks)
         return self.yticksTextRects
 
+    def parseScaleValues(self):
+        """
+        Input: 
+            PlotInfo
+        Output: 
+            X_Scale - (m,b) xnew = xold*m + b
+            Y_Scale - (m,b) ynew = yold*m + b
+        """
+        self.scale_x = methods["parseScale"](self.img, self.corners, self.x_ticks, self.xticksTextRects, True)
+        self.scale_y = methods["parseScale"](self.img, self.corners, self.y_ticks, self.yticksTextRects, False)
+        return self.scale_x
+
+    def rescaleSeries(self, series):
+        """
+        Input: 
+            SeriesPoints
+            X_Scale, Y_Scale
+        Output: 
+            ScaledSeriesPoints
+        """
+        return methods["rescale"](series, self.corners, self.scale_x, self.scale_y)
+
     def findSeriesPoints(self, img):
         """
         Input: 
@@ -92,25 +114,6 @@ class Plot():
         return self.maskedImage
 
 
-    def parseScaleValues(self):
-        """
-        Input: 
-            PlotInfo
-        Output: 
-            X_Scale - (m,b) xnew = xold*m + b
-            Y_Scale - (m,b) ynew = yold*m + b
-        """
-        pass
-
-    def rescaleSeries(self):
-        """
-        Input: 
-            SeriesPoints
-            X_Scale, Y_Scale
-        Output: 
-            ScaledSeriesPoints
-        """
-        pass
 
     """
     The next functions use Text areas calculated from assignTextRoles() function
@@ -143,8 +146,8 @@ class Plot():
         """
         pass
         
-    def getcolorquant(self):
-        self.quant = methods["colorquantization"](self.img, self.corners)
+    def getColorQuant(self):
+        self.quant = methods["colorQuantization"](self.img, self.corners)
         return self.quant
 
     def extractPlotLine(self, color):

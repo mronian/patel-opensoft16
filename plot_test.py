@@ -292,11 +292,37 @@ class TestPlot(unittest.TestCase):
     def test_extract_plotline(self):
         self.plot.corners = self.corners
         self.plot.legend_corners = self.legend_corners
-        clr = 53
-        img = self.plot.extractPlotLine(clr)
-        img2 = Image("img/series_green.jpg") 
-        img2.gray = img
-        points = self.plot.findSeriesPoints(img2)
-        helper.plotPoints(self.plot.img.img, points)
+        for clr in range(177,180,10):
+            img = self.plot.extractPlotLine(clr)
+            img2 = Image("img/series_green.jpg") 
+            img2.gray = img
+            points = self.plot.findSeriesPoints(img2)
+            print clr
+            helper.plotPoints(self.plot.img.img, points)
+            self.plot.img.reload()
         # helper.showimg(img)
+
+    def test_parse_scale(self):
+        self.plot.corners = self.corners
+        self.plot.findTicks()
+        self.plot.findTickText()
+        self.plot.findyTickText()
+        scale_x = self.plot.parseScaleValues()
+
+        assert int(scale_x[0]) == 5
+
+    def test_rescale(self):
+        self.plot.corners = self.corners
+        self.plot.findTicks()
+        self.plot.findTickText()
+        self.plot.findyTickText()
+        self.plot.parseScaleValues()
+
+        img2 = Image("img/series_green.jpg") 
+        points = self.plot.findSeriesPoints(img2)
+
+        scaled = self.plot.rescaleSeries(points)
+        assert int(scaled[-1][0])/3800 == 1
+        assert int(scaled[-1][1])/77 == 1
+
 # unittest.main()
