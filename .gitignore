@@ -3,3 +3,4 @@ opencv
 .DS_Store
 .cache
 __pycache__
+*~
