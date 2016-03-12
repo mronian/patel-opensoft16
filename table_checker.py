@@ -16,6 +16,10 @@ hy=boxcoordinate[2][1]-margin
 
 #import pdb; pdb.set_trace()
 x=ly-hy
+if(x<30)
+    r=.7
+''' margin taken to avoid inclusion of side edges inconsidering vertical lines
+    if table is very small i.e. less than 30 height than to reduce margin error r has been reduced'''
 coodinate=[(lx,ly),(lx,hy),(hx,ly),(hx,hy)]
 gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 edges = cv2.Canny(gray,50,150)
