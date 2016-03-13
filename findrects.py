@@ -10,6 +10,11 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from image import *
 
+def displayimage(img):
+    cv2.imshow("Image", img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
 def retrect(img2,rectangles, i, j):
     for k in range(i, len(img2[0])):
         if(img2[j][k]==0):
@@ -28,7 +33,6 @@ def retrect(img2,rectangles, i, j):
         return 0,0,0,0,0
 
 def getallrect(img2,rects, xbegin, ybegin, xend, yend):
-    print xbegin, ybegin
     flag=0
     try:
         for i in range(xbegin, xend):
@@ -37,9 +41,9 @@ def getallrect(img2,rects, xbegin, ybegin, xend, yend):
                     flag,px, py, k,m=retrect(img2,rects, i, j)
                 if(flag==1): break
             if(flag==1):
-                getallrect(img2, rects,k, ybegin, xend, yend)
-                getallrect(img2, rects, px, ybegin, k, py)
-                getallrect(img2, rects,px, m, k, yend)
+                getallrect(img2, rects,k+2, ybegin, xend, yend)
+                getallrect(img2, rects, px, ybegin, k, py-2)
+                getallrect(img2, rects,px, m+2, k, yend)
                 break
     except:
         pass
@@ -50,8 +54,9 @@ def getrectangles(img):
     top=[]
     bottom=[]
     ret,img2 = cv2.threshold(img,240,255,cv2.THRESH_BINARY)
-    getallrect(img2,rectangles, 0,0, len(img2[0]), len(img2))
+    getallrect(img2,rectangles, 2,2, len(img2[0]), len(img2))
     return rectangles
 
 
         
+
