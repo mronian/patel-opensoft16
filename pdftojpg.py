@@ -1,0 +1,16 @@
+import sys
+from wand.image import Image
+
+filename=sys.argv[1]
+
+for i in range(0, 100):
+    try:
+        name=filename+'['+str(i)+']'
+        print 'Converting Page no: '+str(i+1)
+        img=Image(filename=name,resolution=500)
+        print 'Saving image'
+        name='imag'+str(i)
+        img.save(filename=name+'.jpg')
+    except:
+        break
+    

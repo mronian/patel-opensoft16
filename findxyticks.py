@@ -1,5 +1,6 @@
 #Srihari
 #Function findticks(img, corners) returns a tuple of 2d lists of xticks and yticks
+
 import cv2
 def findxticks(thresh,corners):
     xstart=corners[1][0]
