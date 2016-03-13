@@ -1,3 +1,10 @@
+'''
+Srihari R
+To convert pdf to images using the following CLI command
+python pdftojpg.py <filename>
+Images are saved as imag0.jpg, imag1.jpg and so on.
+'''
+
 import sys
 from wand.image import Image
 
