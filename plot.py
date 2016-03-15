@@ -1,5 +1,7 @@
 from plotmethods import methods
+import numpy as np
 import helpers
+from getbounds import getbounds
 
 class Plot():
 
@@ -47,13 +49,15 @@ class Plot():
     def findTickText(self):
 
         print "Finding X Tick Digits Bounding Rects"
-        self.xticksTextRects = methods["xtickstextFinder"](self.img.gray, self.corners, self.x_ticks)
+        self.getBounds()
+        self.xticksTextRects = methods["xtickstextFinder"](self.img.img, self.corners, self.x_ticks, self.bounds)
         return self.xticksTextRects
 
     def findyTickText(self):
 
         print "Finding Y Tick Digits Bounding Rects"
-        self.yticksTextRects = methods["ytickstextFinder"](self.img.img, self.corners, self.y_ticks)
+        self.getBounds()
+        self.yticksTextRects = methods["ytickstextFinder"](self.img.img, self.corners, self.y_ticks, self.bounds)
         return self.yticksTextRects
 
     def parseScaleValues(self):
@@ -174,8 +178,11 @@ class Plot():
             plot = self.allPlots[k]
 
             points = self.findSeriesPoints(plot[2])
+            # points = np.array(plot[0])
+            # points += self.corners[0]
+            if len(points) == 0:
+                continue
             scaledPoints = self.rescaleSeries(points)
-
             out[k] = scaledPoints
             print out[k].tolist()
             helpers.plotPoints(self.img.img, points)
@@ -215,3 +222,7 @@ class Plot():
 
         self.is_plot = methods["plotCheck"](self.img, self.corners)
         return self.is_plot
+
+    def getBounds(self):
+
+        self.bounds = getbounds(self.img.img, self.corners)

@@ -2,6 +2,10 @@ from plot import Plot
 from image import Image
 from imports import *
 from findrects import getrectangles
+from corners import findAllRects
+from corner_detection import corner_detection
+
+from getbounds import getbounds
 
 
 def processPlot(plot):
@@ -10,8 +14,11 @@ def processPlot(plot):
         print "Not a Plot!"
         return False
 
-    plot.getColorQuant()
-    # plot.show_corners()
+    plot.show_corners()
+
+    # bnds = getbounds(plot.img.img, plot.corners)
+
+
 
     try:
         plot.findTicks()
@@ -19,13 +26,13 @@ def processPlot(plot):
 
         plot.findTickText()
         plot.findyTickText()
-
-    # plot.show_ticktexts()
-
+        plot.show_ticktexts()
+#
         plot.parseScaleValues()
     except:
         pass
 
+    plot.getColorQuant()
     plot.getAllSeries()
 
 
@@ -33,7 +40,10 @@ def processPlot(plot):
 def processPage(img):
 
     print "Finding all possible rectangles in the page"
-    rects = getrectangles(img)
+    # rects = getrectangles(img)
+    rects = findAllRects(img)
+    # rects = corner_detection(img)
+    # helpers.plotMulti(img.img, rects)
 
     for rect in rects:
         plot = Plot(img)

@@ -9,8 +9,8 @@ import scaleMethods
 import getplots
 import plotcheck
 
-import tickmethods_old as tickmethods
-# import tickmethods
+# import tickmethods_old as tickmethods
+import tickmethods
 
 
 methods = {
