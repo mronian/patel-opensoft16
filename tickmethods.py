@@ -5,6 +5,7 @@ Author - Rohan Raja (rohanraja9@gmail.com)
 import numpy as np
 import helpers
 import cv2
+from helpers import *
 
 epsilon = 30
 delta = 4
@@ -14,7 +15,7 @@ WHITE_CLR = (255,255,255)
 
 def findClosestCont(conts, point):
 
-  minDist = 1000
+  minDist = 10000
   minCnt = None
 
   for cnt in conts:
@@ -45,22 +46,20 @@ def find_ymax(conts):
   return y_min, y_max
 
 def getTicksText(image, corners, xticks):
+
     """
-    image - Image class instance from image.py
-    corners - Array of 4 points of corners - 
-              Order of points in array is :
-
-              Index    Position
-              0        Top left
-              1        Bottom left
-              2        Bottom right
-              3        Top right
-
-
-    xticks - array of tick coordinates
-
-    output: array of rectangle surrounding tick text
+    For Rohit:
+        Complete this method to find y bounings
     """
+
+    for yval in range(corners[1][1], corners[1][1] + 140):
+        blackdots = np.sum(image[yval, corners[0][0]:corners[2][0]] < 150)
+        print yval, blackdots
+    import pdb; pdb.set_trace()
+    print image
+
+
+def getTicksText_delta(image, corners, xticks):
 
     img = image
 
@@ -91,13 +90,6 @@ def getTicksText(image, corners, xticks):
 
 
     cnt2 = findClosestCont(conts, xticks[4])
-    # helpers.plotPoints(img, cnt2)
-    # cv2.drawContours(img,[cnt2],0,(0,255,255),4)
-
-    # helpers.showimg(img)
-
-    # ystart = cnt2[:,1].min() - ystart_padding
-    # yend = cnt2[:,1].max() + ystart_padding
 
     ystart, yend = find_ymax(conts)
     ystart -= ystart_padding
@@ -205,7 +197,17 @@ def getTicksText2(image, corners, xticks):
 
     return out
 
-def getYTicksText(image, corners, yticks):
+def getYTicksText(image, corners, xticks):
+
+
+    for xval in range(corners[0][0], corners[0][0] - 220, -1):
+        blackdots = np.sum(image[corners[0][1]:corners[1][1], xval] < 150)
+        print xval, blackdots
+    import pdb; pdb.set_trace()
+    print image
+
+
+def getYTicksText_delta(image, corners, yticks):
 
     img = image
 

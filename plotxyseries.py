@@ -40,8 +40,8 @@ def getxyseries(img, corners):
     return xyseries
                 
     
-def interpolate(img, corners):
-    gray=img.gray
+def interpolate(gray, corners):
+    # gray=img.gray
     ret,thresh=cv2.threshold(gray, 230, 255,0)
     xstart=corners[0][0]
     xend=corners[2][0]

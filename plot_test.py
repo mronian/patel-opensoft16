@@ -4,12 +4,13 @@ from image import *
 import cv2
 import helpers as helper
 import matplotlib.pyplot as plt
+from findrects import *
 
 class TestPlot(unittest.TestCase):
 
     def setUp(self):
-        img = Image("img/tstplot.jpg")
-        self.plot = Plot(img)
+        self.img = Image("img/tstplot.jpg")
+        self.plot = Plot(self.img)
         self.initialize_hardcoded_values()
 
     def initialize_hardcoded_values(self):
@@ -53,6 +54,7 @@ class TestPlot(unittest.TestCase):
         self.plot_title = r'b) Performances of various anytime algorithms'
         self.x_caption = r'Time (Sec)'
         self.y_caption = r'% Optimal Closeness'
+        self.pltclr = 177
 
     def test_finding_corners(self):
         """
@@ -284,7 +286,7 @@ class TestPlot(unittest.TestCase):
 
 
     def test_color_quantization(self):
-        self.plot.corners = self.legend_corners
+        self.plot.corners = self.corners
         img = self.plot.getColorQuant()
         helper.showimg(img)
 
@@ -292,14 +294,14 @@ class TestPlot(unittest.TestCase):
     def test_extract_plotline(self):
         self.plot.corners = self.corners
         self.plot.legend_corners = self.legend_corners
-        for clr in range(177,180,10):
-            img = self.plot.extractPlotLine(clr)
-            img2 = Image("img/series_green.jpg") 
-            img2.gray = img
-            points = self.plot.findSeriesPoints(img2)
-            print clr
-            helper.plotPoints(self.plot.img.img, points)
-            self.plot.img.reload()
+        self.pltclr 
+        img = self.plot.extractPlotLine(clr)
+        img2 = Image("img/series_green.jpg") 
+        img2.gray = img
+        points = self.plot.findSeriesPoints(img2)
+        print clr
+        helper.plotPoints(self.plot.img.img, points)
+        self.plot.img.reload()
         # helper.showimg(img)
 
     def test_parse_scale(self):
@@ -319,10 +321,21 @@ class TestPlot(unittest.TestCase):
         self.plot.parseScaleValues()
 
         img2 = Image("img/series_green.jpg") 
-        points = self.plot.findSeriesPoints(img2)
+        points = self.plot.findSeriesPoints(img2.gray)
 
         scaled = self.plot.rescaleSeries(points)
         assert int(scaled[-1][0])/3800 == 1
         assert int(scaled[-1][1])/77 == 1
+
+    def test_get_all_rects(self):
+
+        self.img = Image("img/page4.jpg")
+        rects = getrectangles(self.img)
+        helpers.plotMulti(self.img.img, rects)
+        import pdb; pdb.set_trace()
+
+
+
+
 
 # unittest.main()
