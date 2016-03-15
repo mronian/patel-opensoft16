@@ -1,13 +1,16 @@
 import corners
 import seriesExtractor
-import tickmethods
 import colorExtractor
 import findxyticks
-# import colourMasking
 import plotxyseries
 import colorquant
 import plotLineExtractor
 import scaleMethods
+import getplots
+import plotcheck
+
+import tickmethods_old as tickmethods
+# import tickmethods
 
 
 methods = {
@@ -20,19 +23,22 @@ methods = {
 
         "colorFinder": colorExtractor.getColors,
 
-        # "maskColor": colourMasking.colourMasking,
-
         "xtickstextFinder": tickmethods.getTicksText,
 
         "ytickstextFinder": tickmethods.getYTicksText,
 
-        "colorQuantization": colorquant.getQuantImage, 
+        # "colorQuantization": colorquant.getQuantImage, 
+        "colorQuantization": getplots.getPlots, 
 
         "plotLineExtractor": plotLineExtractor.extractPlotLine, 
 
         "parseScale": scaleMethods.parseScale, 
 
         "rescale": scaleMethods.reScale, 
+
+        "findLegend": scaleMethods.reScale, 
+
+        "plotCheck": plotcheck.plotCheck, 
 
 
 }
