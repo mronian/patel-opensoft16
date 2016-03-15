@@ -18,10 +18,11 @@ def parseScale(img, corners, xticks, xtexts, is_X = True):
 
     _xticks = xticks - origin
 
+    # ToDo: Choose indices such that at the idx, text is present
     idx2 = len(xticks) / 2
 
     assert idx2 != 0
-    idx2 = 1
+    idx2 = 1 # ToDo: Remove this!
 
     p1 = int(hlp.getOCRText(img.img, xtexts[0]))
     p2 = int(hlp.getOCRText(img.img, xtexts[idx2]))
@@ -32,8 +33,11 @@ def parseScale(img, corners, xticks, xtexts, is_X = True):
         m = float(p2 - p1)/float (_xticks[idx2][1] - _xticks[0][1])
 
     b = p1
+    
 
-    return m,b
+    grainStep = int(float(xticks[1][0]-xticks[0][0])/10.0)
+    
+    return m,b, grainStep
 
 def reScale(series, corners, xscale, yscale):
 
@@ -48,4 +52,8 @@ def reScale(series, corners, xscale, yscale):
 
     out = np.column_stack((allX, allY))
 
+
+    grainStep = xscale[2]
+
+    out = out[::grainStep]
     return out
