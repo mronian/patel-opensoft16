@@ -8,8 +8,8 @@ class Plot():
     seriesPoints = {} # Series Points
     colors = {} # Set of color tuples present in the plot
 
-    X_scale = (0,0)
-    Y_scale = (0,0)
+    scale_x = (0,0,10)
+    scale_y = (0,0)
 
     legend_corners = []
 

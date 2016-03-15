@@ -1,11 +1,10 @@
 from plot import Plot
 from image import Image
 from imports import *
+from findrects import getrectangles
 
-def processPlot(img):
 
-    plot = Plot(img)
-    plot.findCorners()
+def processPlot(plot):
 
     if plot.plotCheck() == False:
         print "Not a Plot!"
@@ -14,40 +13,32 @@ def processPlot(img):
     plot.getColorQuant()
     # plot.show_corners()
 
+    try:
+        plot.findTicks()
+        plot.show_ticks()
 
-    plot.findTicks()
-    plot.show_ticks()
-
-    plot.findTickText()
-    plot.findyTickText()
+        plot.findTickText()
+        plot.findyTickText()
 
     # plot.show_ticktexts()
 
-    plot.parseScaleValues()
+        plot.parseScaleValues()
+    except:
+        pass
 
     plot.getAllSeries()
 
-    clr = 151
-    while clr != -1:
-        clr = int(raw_input())
-        img = plot.extractPlotLine(clr)
-        img2 = Image("img/series_green.jpg") 
-        img2.gray = img
-        points = plot.findSeriesPoints(img2)
-        helpers.plotPoints(plot.img.img, points)
-        plot.img.reload()
 
-    # import pdb; pdb.set_trace()
 
-    # plot.findSeriesPoints()
-    #
-    # plot.recognizeText()
-    # plot.praseScaleValues()
-    # plot.praseCaptions()
-    #
-    # plot.rescaleSeries()
-    #
-    # return plot.table
+def processPage(img):
+
+    print "Finding all possible rectangles in the page"
+    rects = getrectangles(img)
+
+    for rect in rects:
+        plot = Plot(img)
+        plot.corners = rect
+        processPlot(plot)
 
 import sys
 
@@ -55,5 +46,9 @@ try:
     fname = sys.argv[1]
 except:
     fname = "freqPlotResults/testCase1.png"
+
 img = Image(fname)
-processPlot(img)
+# plot = Plot(img)
+# plot.findCorners()
+# processPlot(plot)
+processPage(img)

@@ -4,11 +4,15 @@ class Image():
     img = None
     gray = None
 
-    def __init__(self, imgpath):
+    def __init__(self, imgpath=None, img = None, gray=None):
 
-        self.imgpath = imgpath
-        self.reload()
-
+        if imgpath != None:
+            self.imgpath = imgpath
+            self.reload()
+        else:
+            self.img = img
+            self.gray = gray
+        self.hsv = cv2.cvtColor(self.img, cv2.COLOR_BGR2HSV)
 
     def reload(self):
         imgpath = self.imgpath
