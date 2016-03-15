@@ -27,7 +27,7 @@ def retrect(img2,rectangles, i, j):
         else:
             break
     if(k-i>50 and m-j>50):
-        rectangles.append((i, j, k, m))
+        rectangles.append([ (i,j), (i,m), (k,m), (k,j) ])
         return 1,i, j, k,m
     else:
         return 0,0,0,0,0
