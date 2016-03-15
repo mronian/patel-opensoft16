@@ -4,7 +4,7 @@ from getPlotContours import *
 
 
 minPatchSize = 1
-hdelta = 5
+hdelta = 2
 radius = 10
 seriesLenThresh = 150
 
@@ -162,6 +162,50 @@ def getInterpolateImage(image, corners, series):
 
     return out
 
+def interpolCnt(series, cnt):
+
+    xo,yo,w,h = cv2.boundingRect(cnt.reshape((cnt.shape[0], 1, cnt.shape[1])))
+    
+    xs = np.array(series)[:,0].tolist()
+    # newpts = []
+
+    i = 0
+    while i < w:
+        x = xo + i
+        i+=1
+        
+        if x in xs:
+            while i < w:
+                x = xo + i
+                if x in xs:
+                    lastI = i
+                i+=1
+
+            i = lastI + 1
+            if i >= w:
+                break
+
+            x = xo + i
+        
+        j = 0
+        while j < h:
+            y = yo + j
+            
+            ys = []
+            while cv2.pointPolygonTest(cnt , (x,y), False) == 1:
+                ys.append(y)
+                j += 1
+                y = yo + j
+
+            if len(ys) > 0:
+                newy = int(np.mean(ys))
+                series.append([x, newy])
+                # newpts.append([x, newy])
+            j += 1 
+
+    # print "Interpoloated Using contours"
+    return series
+
 def getPlots(image, corners):
 
     plotsDict = getPlotsDict(image, corners)
@@ -179,6 +223,8 @@ def getPlots(image, corners):
         for cnt in conts:
             serOut = []
             for series in allSeries:
+                if len(series) < 3:
+                    continue
                 if checkSeriesinCnt(series, cnt):
                     serOut += series
 
@@ -190,7 +236,7 @@ def getPlots(image, corners):
         cnt = cnt.reshape((cnt.shape[0], cnt.shape[2]))
         series = candis[-1][0]
 
-        # print h, len(series)
+        print h, len(series)
         return series, cnt
 
 
@@ -214,12 +260,15 @@ def getPlots(image, corners):
                     prevCnt = len(ser)
                     continue
 
+            ser = interpolCnt(ser, cnt)
+
             intpImage = getInterpolateImage(image, corners, ser)
             outs.append((ser, cnt, k, intpImage))
 
+
             outDict[k] = (ser, cnt, intpImage)
 
-            # plotPoints(img, ser)
+            # plotPoints(img, npts)
             print k
 
         prevCnt = len(ser)

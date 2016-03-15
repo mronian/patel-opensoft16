@@ -24,8 +24,8 @@ def parseScale(img, corners, xticks, xtexts, is_X = True):
     assert idx2 != 0
     idx2 = 1 # ToDo: Remove this!
 
-    p1 = int(hlp.getOCRText(img.img, xtexts[0]))
-    p2 = int(hlp.getOCRText(img.img, xtexts[idx2]))
+    p1 = float(hlp.getOCRText(img.img, xtexts[0]))
+    p2 = float(hlp.getOCRText(img.img, xtexts[idx2]))
 
     if is_X:
         m = float(p2 - p1)/float (_xticks[idx2][0] - _xticks[0][0])

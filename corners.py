@@ -30,6 +30,45 @@ def findCorners_1(img):
 
     return out.reshape((out.shape[0], out.shape[2]))
 
+def findAllRects(img):
+
+    gray = img.gray
+
+    ret,thresh = cv2.threshold(gray,200,255,cv2.THRESH_BINARY_INV)
+
+    contours,h = cv2.findContours(thresh,1,2)
+
+    # import helpers
+    # helpers.showimg(thresh)
+
+
+    areas = []
+    outs = []
+
+    for cnt in contours:
+        approx = cv2.approxPolyDP(cnt,0.01*cv2.arcLength(cnt,True),True)
+
+        if len(approx)==4:
+            ar = cv2.contourArea(cnt)
+            areas.append((ar, approx))
+
+            x,y,w,h = cv2.boundingRect(cnt)
+
+            corn = approx.reshape((approx.shape[0], approx.shape[2]))
+            if w > 0.1 * thresh.shape[1] and h > 0.1 *thresh.shape[0]:
+                outs.append(corn)
+
+            # if cv2.contourArea(cnt) > 103060.0 :
+            #     out = approx
+
+
+    return outs
+
+    areas = sorted(areas, key= lambda k: k[0])
+    out = areas[-1][1]
+
+    return out.reshape((out.shape[0], out.shape[2]))
+
 def corshape(m, n, up=True, left = False):
 
     out = np.zeros((m,n), np.uint8)

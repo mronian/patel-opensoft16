@@ -2,7 +2,7 @@ from imports import *
 from helpers import *
 
 hdelta = 1
-kersize = 22
+kersize = 30
 
 def findMaxContours(img):
 
@@ -11,7 +11,7 @@ def findMaxContours(img):
     for c in range(180):
     # for c in [170,50,86,111]:
 
-        lower_blue = np.array([c-hdelta,0,0])
+        lower_blue = np.array([c-hdelta,0,100])
         upper_blue = np.array([c+hdelta,255,250])
         mask = cv2.inRange(img, lower_blue, upper_blue)
 
@@ -39,7 +39,7 @@ def findMaxContours(img):
     # cv2.imshow('dst',img)
 
     # import pdb; pdb.set_trace()
-    return contsS[-100:]
+    return contsS
 
 def getPlotConts(img, corners):
 

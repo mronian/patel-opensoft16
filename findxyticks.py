@@ -2,6 +2,7 @@
 #Function findticks(img, corners) returns a tuple of 2d lists of xticks and yticks
 
 import cv2
+greyThresh = 240
 def findxticks(thresh,corners):
     xstart=corners[1][0]
     xend=corners[2][0]
@@ -82,7 +83,7 @@ def findrightyticks(thresh,corners):
 
 def findticks(img, corners):
     gray = img.gray
-    ret,thresh = cv2.threshold(gray,230,255,0)
+    ret,thresh = cv2.threshold(gray,greyThresh,255,0)
     xticks=findxticks(thresh,corners)
     rightyticks=findrightyticks(thresh,corners)
     leftyticks=findleftyticks(thresh,corners)

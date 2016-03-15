@@ -4,7 +4,7 @@ import numpy as np
 
 def corner_detection(img):
 
-    gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    gray = cv2.cvtColor(img.img,cv2.COLOR_BGR2GRAY)
     img=gray
     c=0
     r=0
