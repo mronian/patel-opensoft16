@@ -28,8 +28,8 @@ def extractPlotLine(image, corners, legend_corners, color):
     outMask[sub] = mask[sub]
     mask = outMask # Remove everything outside corner box
 
-    sub = hlp.subRange(legend_corners)
-    mask[sub] = 0 # Remove Legend Box PlotLine
+    # sub = hlp.subRange(legend_corners)
+    # mask[sub] = 0 # Remove Legend Box PlotLine
 
     kernel = params["kernel"]
     erosion = cv2.erode(mask,kernel,iterations = params["erodeIterations"])
