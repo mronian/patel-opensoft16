@@ -12,6 +12,7 @@ class Plot():
 
     scale_x = (0,0,10)
     scale_y = (0,0)
+    allPlots = {}
 
     legend_corners = []
 
@@ -193,7 +194,7 @@ class Plot():
 
     def findLegendCorners(self):
 
-        self.legend_corners = methods["findLegend"](self.img, self.corners, self.plotColors)
+        self.legend_corners = methods["findLegend"](self.img, self.corners, self.allPlots)
 
 
     def show_ticks(self):

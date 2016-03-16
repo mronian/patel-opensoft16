@@ -12,6 +12,10 @@ import plotcheck
 # import tickmethods_old as tickmethods
 import tickmethods
 
+import legendExtract
+
+from ExtractTextBox import get_legend_textbox
+
 
 methods = {
 
@@ -36,7 +40,8 @@ methods = {
 
         "rescale": scaleMethods.reScale, 
 
-        "findLegend": scaleMethods.reScale, 
+        # "findLegend": get_legend_textbox, 
+        "findLegend": legendExtract.extractLegend, 
 
         "plotCheck": plotcheck.plotCheck, 
 

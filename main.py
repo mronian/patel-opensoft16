@@ -14,25 +14,29 @@ def processPlot(plot):
         print "Not a Plot!"
         return False
 
-    plot.show_corners()
+    # plot.show_corners()
 
     # bnds = getbounds(plot.img.img, plot.corners)
 
+    plot.getColorQuant()
+    plot.findLegendCorners()
+    import pdb; pdb.set_trace()
 
 
     try:
         plot.findTicks()
-        plot.show_ticks()
+        # plot.show_ticks()
 
         plot.findTickText()
         plot.findyTickText()
-        plot.show_ticktexts()
+        # plot.show_ticktexts()
 #
         plot.parseScaleValues()
     except:
         pass
 
     plot.getColorQuant()
+    
     plot.getAllSeries()
 
 
