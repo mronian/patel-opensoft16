@@ -1,3 +1,4 @@
+import cv2
 
 def isColorPresent(image,iStart,iEnd,jStart,jEnd,colorSet):
     """ 
@@ -60,18 +61,18 @@ def labelsToColoursMapping(image,stringToCornersDict,colors):
     iMax = -1
     jMax = -1
     for values in stringToCornersDict.values():
-        iMin = min(values[0][0],iMin)
-        jMin = min(values[0][1],jMin)
-        iMax = max(values[2][0],iMax)
-        jMax = max(values[2][1],jMax)
+        iMin = min(values[0][1],iMin) ## y axis
+        jMin = min(values[0][0],jMin) ## x axis
+        iMax = max(values[2][1],iMax) ## y axis
+        jMax = max(values[2][0],jMax) ## x axis
       
     dis = (jMax-jMin)/2
     jMin-=dis
     jMax+=dis   
     stringToColorDict = {}
     for element in stringToCornersDict:
-        [iStart,jStart] = stringToCornersDict[element][0]
-        [iEnd,jEnd] = stringToCornersDict[element][2]
+        [jStart,iStart] = stringToCornersDict[element][0]
+        [jEnd,iEnd] = stringToCornersDict[element][2]
      
         ### check Left
         jMinLR,jMaxLR = jMin,jStart-1
