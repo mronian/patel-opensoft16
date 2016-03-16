@@ -84,8 +84,12 @@ def labelsToColoursMapping(image,stringToCornersDict,colors):
             stringToColorDict[element] = color
         else:
             stringToColorDict[element] = color2
+    
+    hValueToString = {}
+    for key in stringToColorDict.keys():
+        if(stringToColorDict[key]!=-1):
+            hValueToString[stringToColorDict[key]]=key
         
-        
-    return stringToColorDict
+    return hValueToString
     
 #######################################################################################################
