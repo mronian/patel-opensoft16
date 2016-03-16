@@ -236,7 +236,7 @@ def getPlots(image, corners):
         cnt = cnt.reshape((cnt.shape[0], cnt.shape[2]))
         series = candis[-1][0]
 
-        print h, len(series)
+        # print h, len(series)
         return series, cnt
 
 
@@ -269,7 +269,7 @@ def getPlots(image, corners):
             outDict[k] = (ser, cnt, intpImage)
 
             # plotPoints(img, npts)
-            print k
+            # print k
 
         prevCnt = len(ser)
 

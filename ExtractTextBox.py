@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-def get_legend_textbox(image,plot_coordinates):
+def get_legend_textbox(image,plot_coordinates, plots):
     '''
         Input
          --> Image (with all the plot borders removed)
@@ -18,7 +18,7 @@ def get_legend_textbox(image,plot_coordinates):
     p = 1
     while(p):
         frame_threshed = cv2.dilate(frame_threshed,np.ones((3,3)),iterations=x)
-        _,contours,hierarchy = cv2.findContours(frame_threshed, 1, 2)
+        contours,hierarchy = cv2.findContours(frame_threshed, 1, 2)
         if(len(contours)>1):
             x = x+1
         else:

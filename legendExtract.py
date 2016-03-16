@@ -5,7 +5,7 @@ import corners as c
 class IMG():
     pass
 
-def extractLegend2(image, corners, plots):
+def extractLegend(image, corners, plots):
     
     corners2 = np.array(corners)
     clipper = np.array([20,20])
@@ -24,7 +24,7 @@ def extractLegend2(image, corners, plots):
     kernel = np.ones((x/2,x/2), np.uint8)
     erosion = cv2.erode(erosion,kernel,iterations = 1)
 
-    showimg(erosion)
+    showimg(img)
 
 
     import pdb; pdb.set_trace()

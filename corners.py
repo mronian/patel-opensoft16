@@ -30,11 +30,11 @@ def findCorners_1(img):
 
     return out.reshape((out.shape[0], out.shape[2]))
 
-def findAllRects(img):
+def findAllRects(img, minth=200):
 
     gray = img.gray
 
-    ret,thresh = cv2.threshold(gray,200,255,cv2.THRESH_BINARY_INV)
+    ret,thresh = cv2.threshold(gray,minth,255,cv2.THRESH_BINARY_INV)
 
     contours,h = cv2.findContours(thresh,1,2)
 

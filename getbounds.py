@@ -1,4 +1,4 @@
-
+import cv2
 
 def getbounds(img,coordinate):
 
@@ -71,7 +71,7 @@ def getbounds(img,coordinate):
     c2=0
     prev_gap=0
     gap=0
-    mingap=3
+    mingap=6
     textarea=0
     while flag==1:
         for r in range( ly,hy):
@@ -129,7 +129,7 @@ def getbounds(img,coordinate):
             
             if v1>textthreshold:
                 count1 = count1+1
-                print "count1",count1
+                # print "count1",count1
             if count1>headthresh:
                 v1=0
                 y1=ly-h

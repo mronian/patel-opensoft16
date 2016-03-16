@@ -71,26 +71,5 @@ try:
 except:
     print "Please input the pdf file"
 
-imgs = pdf2img(fname)
-
-out = []
-for fimg in imgs:
-    print "Processing File", fimg
-    if "jpg" not in fimg and "jpeg" not in fimg:
-        continue
-
-    img = Image("tmp/"+fimg)
-    try:
-        pageout = processPage(img)
-        out.append(pageout)
-    except:
-        pass
-
-print "Writing Output to a pdf file"
-
-getOutput(out)
-
-print "Done! Check output.pdf"
-
-
-
+img = Image(fname)
+pageout = processPage(img)

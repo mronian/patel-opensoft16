@@ -22,17 +22,37 @@ def parseScale(img, corners, xticks, xtexts, is_X = True):
     idx2 = len(xticks) / 2
 
     assert idx2 != 0
-    idx2 = 1 # ToDo: Remove this!
+    idx1 = 0
+    idx2 = 1
 
-    p1 = float(hlp.getOCRText(img.img, xtexts[0]))
-    p2 = float(hlp.getOCRText(img.img, xtexts[idx2]))
+    # import pdb; pdb.set_trace()
+
+    gotp1 = True
+    while gotp1:
+
+        try:
+            p1 = float(hlp.getOCRText(img.img, xtexts[idx1]))
+            gotp1 =False
+        except:
+            idx1 +=1
+            idx2 +=1
+
+    gotp1 = True
+    while gotp1:
+
+        try:
+            p2 = float(hlp.getOCRText(img.img, xtexts[idx2]))
+            gotp1 =False
+        except:
+            idx2 +=1
 
     if is_X:
-        m = float(p2 - p1)/float (_xticks[idx2][0] - _xticks[0][0])
+        m = float(p2 - p1)/float (_xticks[idx2][0] - _xticks[idx1][0])
+        b = p1 - m*(_xticks[idx1][0])
     else:
-        m = float(p2 - p1)/float (_xticks[idx2][1] - _xticks[0][1])
+        m = float(p2 - p1)/float (_xticks[idx2][1] - _xticks[idx1][1])
+        b = p1 - m*(_xticks[idx1][1])
 
-    b = p1
     
 
     grainStep = int(float(xticks[1][0]-xticks[0][0])/10.0)

@@ -307,6 +307,7 @@ class TestPlot(unittest.TestCase):
     def test_parse_scale(self):
         self.plot.corners = self.corners
         self.plot.findTicks()
+        self.plot.getBounds()
         self.plot.findTickText()
         self.plot.findyTickText()
         scale_x = self.plot.parseScaleValues()
@@ -316,6 +317,7 @@ class TestPlot(unittest.TestCase):
     def test_rescale(self):
         self.plot.corners = self.corners
         self.plot.findTicks()
+        self.plot.getBounds()
         self.plot.findTickText()
         self.plot.findyTickText()
         self.plot.parseScaleValues()

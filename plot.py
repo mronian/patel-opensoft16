@@ -1,5 +1,6 @@
 from plotmethods import methods
 import numpy as np
+import cv2
 import helpers
 from getbounds import getbounds
 
@@ -10,8 +11,8 @@ class Plot():
     seriesPoints = {} # Series Points
     colors = {} # Set of color tuples present in the plot
 
-    scale_x = (0,0,10)
-    scale_y = (0,0)
+    scale_x = (1,0,10)
+    scale_y = (-1,0)
     allPlots = {}
 
     legend_corners = []
@@ -50,14 +51,14 @@ class Plot():
     def findTickText(self):
 
         print "Finding X Tick Digits Bounding Rects"
-        self.getBounds()
+        # self.getBounds()
         self.xticksTextRects = methods["xtickstextFinder"](self.img.img, self.corners, self.x_ticks, self.bounds)
         return self.xticksTextRects
 
     def findyTickText(self):
 
         print "Finding Y Tick Digits Bounding Rects"
-        self.getBounds()
+        # self.getBounds()
         self.yticksTextRects = methods["ytickstextFinder"](self.img.img, self.corners, self.y_ticks, self.bounds)
         return self.yticksTextRects
 
@@ -186,7 +187,7 @@ class Plot():
             scaledPoints = self.rescaleSeries(points)
             out[k] = scaledPoints
             print out[k].tolist()
-            helpers.plotPoints(self.img.img, points)
+            # helpers.plotPoints(self.img.img, points)
 
         self.allScaledSeries = out
         return out
@@ -227,3 +228,69 @@ class Plot():
     def getBounds(self):
 
         self.bounds = getbounds(self.img.img, self.corners)
+
+    def getAxisCaption(self):
+
+        y1, y2 = self.bounds[0][2]
+        x1, x2 = self.corners[0][0], self.corners[2][0]
+        x1 -= 5
+        x2 += 5
+        
+        xaxisCorenrs = [
+                (x1, y1),
+                (x1, y2),
+                (x2, y2),
+                (x2, y1),
+        ]
+        self.plot_caption = helpers.getOCRText(self.img.img, xaxisCorenrs, "-psm 7")
+
+        y1, y2 = self.bounds[0][1]
+        x1, x2 = self.corners[0][0], self.corners[2][0]
+        x1 -= 5
+        x2 += 5
+        
+        xaxisCorenrs = [
+                (x1, y1),
+                (x1, y2),
+                (x2, y2),
+                (x2, y1),
+        ]
+        self.x_caption = helpers.getOCRText(self.img.img, xaxisCorenrs, "-psm 7")
+        # helpers.plotPoints(self.img.img, xaxisCorenrs)
+
+        x1, x2 = self.bounds[1][1]
+        y1, y2 = self.corners[0][1], self.corners[1][1]
+        x1 -= 5
+        x2 += 5
+        xaxisCorenrs = [
+                (x1, y1),
+                (x1, y2),
+                (x2, y2),
+                (x2, y1),
+        ]
+        img = helpers.getSubImage(self.img.gray, xaxisCorenrs)
+        dst = img.transpose()
+        dst = cv2.flip(dst, 1)
+        self.y_caption = helpers.getOCRText(dst, None, "-psm 7")
+
+
+    def generate_output(self):
+
+        allplts = []
+        for k in self.allScaledSeries.keys():
+            val = self.allScaledSeries[k]
+
+            # plt = (self.legends[k], val)
+            plt = ("plot_%d"%k, val.tolist())
+            allplts.append(plt)
+        
+        out = (
+                self.plot_caption,
+                self.x_caption,
+                self.y_caption,
+                allplts
+        )
+        return out
+
+
+

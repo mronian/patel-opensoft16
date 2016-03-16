@@ -29,13 +29,17 @@ def subRange(corners):
     return slice(corners[0][1],corners[2][1]), slice(corners[0][0],corners[2][0])
 
 
+cnt = 0
+
 def showimg(img, callback=None):
 
     # im2 = img#cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
     # plt.imshow(im2)
     # plt.show()
     # return
+    
 
+    global cnt
     def onmouse(event,x,y,flags,param):
         if( event == cv2.EVENT_MOUSEMOVE ) :
             return
@@ -45,23 +49,29 @@ def showimg(img, callback=None):
         if callback != None:
             callback(x,y)
 
+
+    # cnt += 1
+    # cv2.imwrite("intimg/%d.png"%cnt, img)
+    # return
     cv2.imshow("input", img)
     cv2.setMouseCallback('input',onmouse)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-def getOCRText(img, corners):
+def getOCRText(img, corners, cfg = "-psm 8"):
 
     # imag = Image.open("img/tstplot.jpg")
     
-    corner_img = getSubImage(img, corners)
+    if corners != None:
+        corner_img = getSubImage(img, corners)
+    else:
+        corner_img = img
     # cv2.imshow("input", corner_img)
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
     imag = Image.fromarray(corner_img)
 
     # ToDo: for OCR of ticks, use single word
-    cfg = "-psm 8"
     return tess.image_to_string(imag, config=cfg)
 
 
@@ -69,11 +79,15 @@ def getOCRText(img, corners):
 
 def plotPoints(img, points, clr = (0,255,0), show=True ):
 
+    global cnt
     img = img.copy()
     for p in points:
         cv2.circle(img, (p[0], p[1]), 5, clr, thickness=-1)
 
     if show:
+        # cnt += 1
+        # cv2.imwrite("intimg/%d.jpg"%cnt, img)
+        # return
         cv2.imshow("input", img)
         # cv2.waitKey(0)
         raw_input()
