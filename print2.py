@@ -58,7 +58,7 @@ def Output(Input):
                      for point in points:
                         data.append([str(point[0]) ,str(point[1]),line_caption])
                      style = TableStyle([('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),('BOX', (0,0), (-1,-1), 0.25, colors.black),('TEXTCOLOR',(0,0),(-1,-1),colors.blue)])
-                     line_color = cv2.cvtColor(line_color,cv2.COLOR_HSV2BGR)
+                     #line_color = cv2.cvtColor(line_color,cv2.COLOR_HSV2BGR)
                      r = line_color[2]
                      g = line_color[1]
                      b = line_color[0]
