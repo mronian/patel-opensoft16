@@ -7,8 +7,7 @@ from corners import findAllRects
 from corner_detection import corner_detection
 
 from getbounds import getbounds
-# from getout import getOutput
-from print2 import Output
+from getout import getOutput
 from pdftoimg import pdf2img
 
 
@@ -18,13 +17,13 @@ def processPlot(plot):
         print "Not a Plot!"
         return False
 
-    plot.show_corners()
+    # plot.show_corners()
     # plot.getColorQuant()
+    # plot.findLegendCorners()
 
-    plot.findLegendCorners()
     try:
         plot.findTicks()
-        plot.show_ticks()
+        # plot.show_ticks()
         plot.getBounds()
         plot.findTickText()
         plot.findyTickText()
@@ -38,18 +37,13 @@ def processPlot(plot):
     
     plot.getAllSeries()
 
-    plot.mapLegendToPlots()
+    out = plot.generate_output()
 
-    try:
-        out = plot.generate_output()
-    except Exception,e:
-        print e
-
-    Output([ ("tmp/page-1.jpg", [out])])
     return out
 
     # print out
     #
+    # getOutput([[out]])
 
 
 
@@ -79,5 +73,26 @@ except:
     import os
     os.exit()
 
-img = Image(fname)
-pageout = processPage(img)
+imgs = pdf2img(fname)
+
+out = []
+for fimg in imgs:
+    print "Processing File", fimg
+    if "jpg" not in fimg and "jpeg" not in fimg:
+        continue
+
+    img = Image("tmp/"+fimg)
+    try:
+        pageout = processPage(img)
+        out.append(pageout)
+    except:
+        pass
+
+print "Writing Output to a pdf file"
+
+getOutput(out)
+
+print "Done! Check output.pdf"
+
+
+

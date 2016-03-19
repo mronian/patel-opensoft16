@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 import helpers
 from getbounds import getbounds
+from labelToHvalues import labelsToColoursMapping
 
 class Plot():
 
@@ -186,7 +187,7 @@ class Plot():
                 continue
             scaledPoints = self.rescaleSeries(points)
             out[k] = scaledPoints
-            print out[k].tolist()
+            # print out[k].tolist()
             # helpers.plotPoints(self.img.img, points)
 
         self.allScaledSeries = out
@@ -195,7 +196,7 @@ class Plot():
 
     def findLegendCorners(self):
 
-        self.legend_corners = methods["findLegend"](self.img, self.corners, self.allPlots)
+        self.allLegendTexts = methods["findLegend"](self.img, self.corners, self.allPlots)
 
 
     def show_ticks(self):
@@ -281,7 +282,15 @@ class Plot():
             val = self.allScaledSeries[k]
 
             # plt = (self.legends[k], val)
-            plt = ("plot_%d"%k, val.tolist())
+            rgb = np.ones((1,1,3), dtype = np.uint8)
+            rgb[0,0] = (k,155,155)
+            rbg2 = cv2.cvtColor(rgb, cv2.COLOR_HSV2BGR)
+            try:
+                pltLegend = (self.h2str[k], rbg2[0][0])
+            except:
+                pltLegend = ("plot",  rbg2[0][0] )
+            plt = (pltLegend, val.tolist())
+            # plt = ("plot", val.tolist())
             allplts.append(plt)
         
         out = (
@@ -293,4 +302,14 @@ class Plot():
         return out
 
 
+    def mapLegendToPlots(self):
+
+        self.findLegendCorners()
+
+        strDict = {}
+        for rect in self.allLegendTexts:
+            txt = helpers.getOCRText(self.img.img, rect, "-psm 7")
+            strDict[txt] = rect
+
+        self.h2str = labelsToColoursMapping(self.img.img, strDict, self.allPlots.keys())
 

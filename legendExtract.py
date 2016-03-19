@@ -1,11 +1,23 @@
 from imports import *
 from helpers import *
 import corners as c
+from lengendtxt import legendtextcorner
+from legendcoordinate import legendcoordinate
 
 class IMG():
     pass
 
 def extractLegend(image, corners, plots):
+
+    leg_corners = legendtextcorner(image.img, corners)
+    # plotPoints(image.img, leg_corners)
+    out = legendcoordinate(image.img, leg_corners)
+    # plotMulti(image.img, out)
+    return out
+    pass
+
+
+def extractLegend3(image, corners, plots):
     
     corners2 = np.array(corners)
     clipper = np.array([20,20])
@@ -89,7 +101,7 @@ def checkPattern(col):
 
     import pdb; pdb.set_trace()
  
-def extractLegend(image, corners, plots):
+def extractLegend33(image, corners, plots):
     
     img = image.hsv
     lower_blue = np.array([0,0,0])

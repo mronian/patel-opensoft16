@@ -1,21 +1,20 @@
 import numpy as np
 import cv2
-def legendtextcorner(img,coordinate):
-    
+
+def legendtext (img,coordinate)    :
     img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     k,img = ret,thresh1 = cv2.threshold(img,200,255,cv2.THRESH_BINARY)
     lx=coordinate[0][0]
-    hx=coordinate[2][0]
     ly=coordinate[0][1]
-    hy=coordinate[1][1]
-
+    hx=coordinate[3][0]
+    hy=coordinate[2][1]
     c=hx-1
     v=0
     total=0
     a=[]
     img1=img
 
-    while c>lx:
+    while c>0:
         
         for r in range(ly,hy):
             if img[r][c]==0:
@@ -30,7 +29,7 @@ def legendtextcorner(img,coordinate):
     r=1.2
     avg=total*r/(hx-lx)
     avg=int(avg)
-    
+
     gap=0
     count=0
     gapthresh=10
@@ -46,12 +45,13 @@ def legendtextcorner(img,coordinate):
     t=0
     w=0
 
-    for i in range (0,hx-lx-2):
+    for i in range (0,hx-2):
+        
         if a[i]>=avg :
             count=count+1
             if(check==0) and gap>gapthresh :
                 c1=hx-1-i
-            if count >10:
+            if count >thresh:
                 gap=0
             check=1
         if a[i]<avg :
@@ -64,9 +64,8 @@ def legendtextcorner(img,coordinate):
                 count=0
                 check=0
 
-    
+        c=c-1
 
-    print c1,c2
 
     r=0
     v=0
@@ -100,7 +99,10 @@ def legendtextcorner(img,coordinate):
                     
                     
                     t=abs(t1-t2)
-                   
+                    cv2.line(img1,(t2,t2),(t2,hy-t),(10,30,8),1)
+                    cv2.line(img1,(t,t),(hx-1,t2),(10,30,8),1)
+                    cv2.line(img1,(hx-t,t),(hx-t,hy-t),(10,30,8),1)
+                    cv2.line(img1,(t,hy-t2),(t,hy-t2),(10,30,8),1)
                     break
         vprev=v
         r=r+1
@@ -150,7 +152,3 @@ def legendtextcorner(img,coordinate):
                 check=0
 
     return [[c2,r1],[c2,r2],[c1,r2],[c1,r1]]
-    
-
-
-

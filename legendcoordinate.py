@@ -8,17 +8,17 @@ def legendcoordinate(img,coordinate):
     lx=coordinate[0][0]
     hx=coordinate[2][0]
     ly=coordinate[0][1]
-    hy=coordinate[1][1]
+    hy=coordinate[1][1] + 2
 
 
 
-    xpad=2
-    ypad=2
+    xpad=4
+    ypad=4
 
     v=0
     flag=0
     c=lx
-    pixelthresh=7
+    pixelthresh=5
     check=0
 
     count=0

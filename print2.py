@@ -14,7 +14,7 @@ import numpy as np
 
 
 def Output(Input):
-    doc = SimpleDocTemplate("test.pdf", pagesize=letter, rightMargin=30,leftMargin=30, topMargin=30,bottomMargin=18)
+    doc = SimpleDocTemplate("result.pdf", pagesize=letter, rightMargin=30,leftMargin=30, topMargin=30,bottomMargin=18)
     elements = []
     s = getSampleStyleSheet()
     s = s["BodyText"]

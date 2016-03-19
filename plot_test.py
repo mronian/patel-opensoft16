@@ -130,6 +130,7 @@ class TestPlot(unittest.TestCase):
 
         self.plot.corners = self.corners
         # self.plot.x_ticks = self.xticks
+        self.plot.getBounds()
         self.plot.findTicks()
         ticktextRect = self.plot.findTickText()
         tickText = helper.getOCRText(self.plot.img.img, ticktextRect[1])
@@ -155,6 +156,7 @@ class TestPlot(unittest.TestCase):
 
         self.plot.corners = self.corners
         # self.plot.x_ticks = self.xticks
+        self.plot.getBounds()
         self.plot.findTicks()
         ticktextRect = self.plot.findyTickText()
         # import pdb; pdb.set_trace()
@@ -182,21 +184,21 @@ class TestPlot(unittest.TestCase):
         print points
         helper.plotPoints(self.plot.img.img, points)
 
-    def test_extract_plot_colors(self):
-        """
-        Setup: 
-            - Input Test Image (Already done)
-        
-        Assertion:
-            - Check the colors present in Image with hardcoded colors
-        
-        Things to Find:
-            - Set of tuples of colors (except Black and white) in Image
-        """
-        self.plot.corners = self.corners
-        self.plot.legend_corners = self.legend_corners
-        plotColors = self.plot.findColors()
-        assert plotColors == self.colors
+    # def test_extract_plot_colors(self):
+    #     """
+    #     Setup: 
+    #         - Input Test Image (Already done)
+    #     
+    #     Assertion:
+    #         - Check the colors present in Image with hardcoded colors
+    #     
+    #     Things to Find:
+    #         - Set of tuples of colors (except Black and white) in Image
+    #     """
+    #     self.plot.corners = self.corners
+    #     self.plot.legend_corners = self.legend_corners
+    #     plotColors = self.plot.findColors()
+    #     assert plotColors == self.colors
 
     
     def test_extract_plot_title(self):
@@ -206,14 +208,17 @@ class TestPlot(unittest.TestCase):
             - Corners
         Assertion:
             - Check the plot title with hardcoded value
-        
+
         Things to Find:
             - Rect surrounding the plot title
             - plot title from the Rect
         """
         self.plot.corners = self.corners
-        plotTitleRect = self.plot.findTitleRect()
-        plotTitle = helper.getOCRText(self.plot.img, plotTitleRect)
+        self.plot.getBounds()
+        self.plot.getAxisCaption()
+        plotTitle = self.plot.plot_caption
+        print self.plot.x_caption
+        print self.plot.y_caption
         assert plotTitle == self.plot_title
 
     def test_extract_xaxis_caption(self):
@@ -223,7 +228,7 @@ class TestPlot(unittest.TestCase):
             - Corners
         Assertion:
             - Check the x-axis caption with hardcoded value
-        
+
         Things to Find:
             - Rect surrounding the x-axis caption
             - x-axis caption from the Rect
@@ -241,7 +246,7 @@ class TestPlot(unittest.TestCase):
             - Corners
         Assertion:
             - Check the y-axis caption with hardcoded value
-        
+
         Things to Find:
             - Rect surrounding the y-axis caption
             - y-axis caption from the Rect
@@ -251,58 +256,58 @@ class TestPlot(unittest.TestCase):
         yaxisCaption = helper.getOCRText(self.plot.img, yaxisCaptionRect)
         assert yaxisCaption == self.y_caption
 
-    def test_mask_other_colors(self):
-        """
-        Setup: 
-            - Input Test Image (Already done)
-            - Corners
-            - Target Color
-            - All Colors
-        Assertion:
-            - Check the masked out version of image is correct
-        Things to Find:
-            - Masked out version of plot wrt each color in plot
-        """
-        self.plot.corners = self.corners
-        
-        clr = (88,79,223)
-
-        img = self.plot.maskColor(clr)
-        plt.show(img)
-        cv2.imshow("input", img)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-
-        for target_color in self.colors:
-            maskedPlot = helper.getMaskedPlot(self.plot.img, target_color, self.colors)
-            for color in self.colors:
-                if color == target_color:
-                    if color not in maskedPlot:
-                        assert False
-                elif color != target_color:
-                    if color in maskedPlot:
-                        assert False
-        assert True
-
-
-    def test_color_quantization(self):
-        self.plot.corners = self.corners
-        img = self.plot.getColorQuant()
-        helper.showimg(img)
+    # def test_mask_other_colors(self):
+    #     """
+    #     Setup: 
+    #         - Input Test Image (Already done)
+    #         - Corners
+    #         - Target Color
+    #         - All Colors
+    #     Assertion:
+    #         - Check the masked out version of image is correct
+    #     Things to Find:
+    #         - Masked out version of plot wrt each color in plot
+    #     """
+    #     self.plot.corners = self.corners
+    #     
+    #     clr = (88,79,223)
+    #
+    #     img = self.plot.maskColor(clr)
+    #     plt.show(img)
+    #     cv2.imshow("input", img)
+    #     cv2.waitKey(0)
+    #     cv2.destroyAllWindows()
+    #
+    #     for target_color in self.colors:
+    #         maskedPlot = helper.getMaskedPlot(self.plot.img, target_color, self.colors)
+    #         for color in self.colors:
+    #             if color == target_color:
+    #                 if color not in maskedPlot:
+    #                     assert False
+    #             elif color != target_color:
+    #                 if color in maskedPlot:
+    #                     assert False
+    #     assert True
 
 
-    def test_extract_plotline(self):
-        self.plot.corners = self.corners
-        self.plot.legend_corners = self.legend_corners
-        self.pltclr 
-        img = self.plot.extractPlotLine(clr)
-        img2 = Image("img/series_green.jpg") 
-        img2.gray = img
-        points = self.plot.findSeriesPoints(img2)
-        print clr
-        helper.plotPoints(self.plot.img.img, points)
-        self.plot.img.reload()
-        # helper.showimg(img)
+    # def test_color_quantization(self):
+    #     self.plot.corners = self.corners
+    #     img = self.plot.getColorQuant()
+    #     helper.showimg(img)
+    #
+    #
+    # def test_extract_plotline(self):
+    #     self.plot.corners = self.corners
+    #     self.plot.legend_corners = self.legend_corners
+    #     self.pltclr 
+    #     img = self.plot.extractPlotLine(clr)
+    #     img2 = Image("img/series_green.jpg") 
+    #     img2.gray = img
+    #     points = self.plot.findSeriesPoints(img2)
+    #     print clr
+    #     helper.plotPoints(self.plot.img.img, points)
+    #     self.plot.img.reload()
+    #     # helper.showimg(img)
 
     def test_parse_scale(self):
         self.plot.corners = self.corners
@@ -334,7 +339,7 @@ class TestPlot(unittest.TestCase):
         self.img = Image("img/page4.jpg")
         rects = getrectangles(self.img)
         helpers.plotMulti(self.img.img, rects)
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
 
 
 

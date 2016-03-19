@@ -17,9 +17,10 @@ def pdf2img(fpath, dest_width = 800):
     except:
         pass
 
-    with Image(filename=fpath, resolution=200) as img:
+    with Image(filename=fpath, resolution=140) as img:
          img.background_color = Color('white')
          img_width = img.width
+         dest_width = 800
          ratio = float(dest_width) / float(img_width)
          # img.resize(dest_width, int(ratio * img.height))
          img.compression_quality = 99

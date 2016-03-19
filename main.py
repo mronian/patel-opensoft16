@@ -7,7 +7,8 @@ from corners import findAllRects
 from corner_detection import corner_detection
 
 from getbounds import getbounds
-from getout import getOutput
+# from getout import getOutput
+from print2 import Output
 from pdftoimg import pdf2img
 
 
@@ -37,6 +38,7 @@ def processPlot(plot):
     
     plot.getAllSeries()
 
+    plot.mapLegendToPlots()
     out = plot.generate_output()
 
     return out
@@ -70,6 +72,8 @@ try:
     fname = sys.argv[1]
 except:
     print "Please input the pdf file"
+    import os
+    os.exit()
 
 imgs = pdf2img(fname)
 
@@ -82,15 +86,15 @@ for fimg in imgs:
     img = Image("tmp/"+fimg)
     try:
         pageout = processPage(img)
-        out.append(pageout)
+        out.append(("tmp/" +fimg,  pageout) )
     except:
         pass
 
 print "Writing Output to a pdf file"
 
-getOutput(out)
+Output(out)
 
-print "Done! Check output.pdf"
+print "Done! Check result.pdf"
 
 
 

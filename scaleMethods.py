@@ -36,6 +36,8 @@ def parseScale(img, corners, xticks, xtexts, is_X = True):
         except:
             idx1 +=1
             idx2 +=1
+        if idx2 > len(xtexts):
+            gotp1 = False
 
     gotp1 = True
     while gotp1:
@@ -45,6 +47,9 @@ def parseScale(img, corners, xticks, xtexts, is_X = True):
             gotp1 =False
         except:
             idx2 +=1
+
+        if idx2 > len(xtexts):
+            gotp1 = False
 
     if is_X:
         m = float(p2 - p1)/float (_xticks[idx2][0] - _xticks[idx1][0])
